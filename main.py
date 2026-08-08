@@ -8,7 +8,6 @@ from models import Base
 from admin import admin_routes
 from client import client_router
 
-# Barcha jadvallarni yaratib beradi proyekt ishga tushgada 
 Base.metadata.create_all(bind=engine)
 
 

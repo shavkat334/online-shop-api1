@@ -35,7 +35,7 @@ def my_cart(user_id: int, db: Session = Depends(get_db)):
 
 @client_router.post("/order", response_model=WelcomePageResponce)
 def create_order(order_data: Order, db: Session = Depends(get_db)):
-    # 1. Yangi Order yaratamiz.
+  
     new_order = OrderModel(
         full_name=order_data.full_name,
         phone_number=order_data.phone_number,
@@ -45,9 +45,9 @@ def create_order(order_data: Order, db: Session = Depends(get_db)):
         status=False,
     )
     db.add(new_order)
-    db.flush()  # order.id ni olish uchun
+    db.flush() 
 
-    # 2. Foydalanuvchining hali buyurtma qilinmagan cartlarini topamiz.
+
     cart_items = (
         db.query(CartItem)
         .filter(
@@ -57,7 +57,6 @@ def create_order(order_data: Order, db: Session = Depends(get_db)):
         .all()
     )
 
-    # 3. Har bir cart itemni yangi orderga bog'laymiz.
     for item in cart_items:
         item.order_id = new_order.id
         item.status = True
